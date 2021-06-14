@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const contactsController = require('./controllers/contacts')
 const APP = express()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3003
 
 APP.use('/contacts', contactsController)
 APP.use(express.json())

@@ -2,11 +2,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 require('dotenv').config()
-const contactsController = require('./controllers/contacts')
 const APP = express()
 const PORT = process.env.PORT || 3003
 
-APP.use('/contacts', contactsController)
 APP.use(express.json())
 
 // Mongo Setup 
@@ -30,6 +28,10 @@ const corsOptions = {
     }
 }
 APP.use(cors(corsOptions))
+
+const contactsController = require('./controllers/contacts')
+
+APP.use('/contacts', contactsController)
 
 
 APP.listen(PORT, () => {

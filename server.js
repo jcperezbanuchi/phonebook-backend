@@ -18,7 +18,7 @@ mongoose.connection.once('open', () => {
 })
 
 // Cors Middleware for Requests
-const whiteList = process.env.whiteList
+const whiteList = ['http://localhost:3000']
 const corsOptions = {
     origin: function (origin, callback) {
         if (whiteList.indexOf(origin) != -1) {

@@ -4,13 +4,12 @@ const cors = require('cors')
 require('dotenv').config()
 const APP = express()
 const PORT = process.env.PORT || 3003
-const sessionsController = require('./controllers/sessions_controller.js')
-const userController = require('./controllers/user_controller.js')
+const sessionsController = require('./controllers/sessions')
+const userController = require('./controllers/users')
 
 APP.use(express.json())
 APP.use('/users', userController)
 APP.use('/sessions', sessionsController)
-APP.use(patientControllers)
 
 // Middleware for User Authentication
 const isAuthenticated = (req, res, next) => {

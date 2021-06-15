@@ -35,6 +35,7 @@ const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/' + 'c
 mongoose.connect(MONGODBNAME, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
 })
 mongoose.connection.once('open', () => {
     console.log('Connected to Mongo')
@@ -43,14 +44,15 @@ mongoose.connection.once('open', () => {
 // Cors Middleware for Requests
 const whiteList = process.env.WHITELIST
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (whiteList.indexOf(origin) != -1) {
-            callback(null, true)
+    origin: (origin, callback) => {
+        if (whiteList.indexOf(origin) >= 0) {
+            callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'))
+            callback(new Error('Not allowed by CORS'));
         }
-    }
-}
+    },
+};
+
 APP.use(cors(corsOptions))
 
 const contactsController = require('./controllers/contacts')

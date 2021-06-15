@@ -29,8 +29,10 @@ const isAuthenticated = (req, res, next) => {
     }
 }
 
+const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/' + 'contacts'
+
 // Mongo Setup 
-mongoose.connect('mongodb://localhost:27017/contacts', {
+mongoose.connect(MONGODBNAME, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })

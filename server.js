@@ -6,11 +6,12 @@ const APP = express()
 const PORT = process.env.PORT || 3003
 
 APP.use(express.json())
-
+const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/contacts'
 // Mongo Setup 
-mongoose.connect('mongodb://localhost:27017/contacts', {
+mongoose.connect(MONGODBNAME, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false
 })
 mongoose.connection.once('open', () => {
     console.log('Connected to Mongo')

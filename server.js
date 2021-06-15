@@ -1,11 +1,34 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const session = require('express-session')
 require('dotenv').config()
 const APP = express()
 const PORT = process.env.PORT || 3003
+const sessionsController = require('./controllers/sessions')
+const userController = require('./controllers/users')
 
 APP.use(express.json())
+APP.use('/users', userController)
+APP.use('/sessions', sessionsController)
+APP.use(
+    session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: false
+    })
+)
+
+
+// Middleware for User Authentication
+const isAuthenticated = (req, res, next) => {
+    if (req.session.currentUser) {
+        return next()
+    } else {
+        res.redirect('/sessions/new')
+    }
+}
+
 const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/' + 'contacts'
 
 // Mongo Setup 
@@ -19,7 +42,7 @@ mongoose.connection.once('open', () => {
 })
 
 // Cors Middleware for Requests
-const whiteList = ['http://localhost:3000', 'https://phonebook-frontend-project3.herokuapp.com']
+const whiteList = process.env.WHITELIST
 const corsOptions = {
     origin: (origin, callback) => {
         if (whiteList.indexOf(origin) >= 0) {

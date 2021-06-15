@@ -4,8 +4,22 @@ const cors = require('cors')
 require('dotenv').config()
 const APP = express()
 const PORT = process.env.PORT || 3003
+const sessionsController = require('./controllers/sessions_controller.js')
+const userController = require('./controllers/user_controller.js')
 
 APP.use(express.json())
+APP.use('/users', userController)
+APP.use('/sessions', sessionsController)
+APP.use(patientControllers)
+
+// Middleware for User Authentication
+const isAuthenticated = (req, res, next) => {
+    if (req.session.currentUser) {
+        return next()
+    } else {
+        res.redirect('/sessions/new')
+    }
+}
 
 // Mongo Setup 
 mongoose.connect('mongodb://localhost:27017/contacts', {
@@ -17,7 +31,7 @@ mongoose.connection.once('open', () => {
 })
 
 // Cors Middleware for Requests
-const whiteList = ['http://localhost:3000']
+const whiteList = process.env.WHITELIST
 const corsOptions = {
     origin: function (origin, callback) {
         if (whiteList.indexOf(origin) != -1) {

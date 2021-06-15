@@ -6,7 +6,8 @@ const APP = express()
 const PORT = process.env.PORT || 3003
 
 APP.use(express.json())
-const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/contacts'
+const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/' + 'contacts'
+
 // Mongo Setup 
 mongoose.connect(MONGODBNAME, {
     useNewUrlParser: true,

@@ -19,14 +19,15 @@ mongoose.connection.once('open', () => {
 // Cors Middleware for Requests
 const whiteList = ['http://localhost:3000', 'https://phonebook-frontend-project3.herokuapp.com']
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (whiteList.indexOf(origin) != -1) {
-            callback(null, true)
+    origin: (origin, callback) => {
+        if (whiteList.indexOf(origin) >= 0) {
+            callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'))
+            callback(new Error('Not allowed by CORS'));
         }
-    }
-}
+    },
+};
+
 APP.use(cors(corsOptions))
 
 const contactsController = require('./controllers/contacts')

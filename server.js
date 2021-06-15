@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const session = require('express-session')
 require('dotenv').config()
 const APP = express()
 const PORT = process.env.PORT || 3003
@@ -10,6 +11,14 @@ const userController = require('./controllers/users')
 APP.use(express.json())
 APP.use('/users', userController)
 APP.use('/sessions', sessionsController)
+APP.use(
+    session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: false
+    })
+)
+
 
 // Middleware for User Authentication
 const isAuthenticated = (req, res, next) => {

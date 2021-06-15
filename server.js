@@ -17,7 +17,7 @@ mongoose.connection.once('open', () => {
 })
 
 // Cors Middleware for Requests
-const whiteList = ['http://localhost:3000']
+const whiteList = ['http://localhost:3000', 'https://phonebook-frontend-project3.herokuapp.com/']
 const corsOptions = {
     origin: function (origin, callback) {
         if (whiteList.indexOf(origin) != -1) {

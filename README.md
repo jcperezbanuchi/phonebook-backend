@@ -56,3 +56,9 @@ At this point in our app, we're able to render our login inputs, add new contact
 <h2>Links to heroku (frontend and backend)</h2>
 https://phonebook-frontend-project3.herokuapp.com/
 https://phonebook-backend-project3.herokuapp.com/
+
+<br>
+<br>
+
+<h2>Link to frontend GitHub</h2>
+https://github.com/jcperezbanuchi/phonebook-frontend

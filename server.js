@@ -9,7 +9,7 @@ const sessionsController = require('./controllers/sessions')
 const userController = require('./controllers/users')
 
 
-// Cors Middleware for Reques
+// Cors Middleware for Requests
 const whiteList = ['http://localhost:3000/', 'https://phonebook-frontend-project3.herokuapp.com']
 const corsOptions = {
     origin: (origin, callback) => {
@@ -21,7 +21,7 @@ const corsOptions = {
     },
 };
 
-APP.use(cors(corsOptions))
+APP.use(cors())
 
 
 APP.use(express.json())
@@ -56,7 +56,6 @@ mongoose.connect(MONGODBNAME, {
 mongoose.connection.once('open', () => {
     console.log('Connected to Mongo')
 })
-
 
 
 

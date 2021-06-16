@@ -8,6 +8,22 @@ const PORT = process.env.PORT || 3003
 const sessionsController = require('./controllers/sessions')
 const userController = require('./controllers/users')
 
+
+// Cors Middleware for Reques
+const whiteList = ['http://localhost:3000/', 'https://phonebook-frontend-project3.herokuapp.com']
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (whiteList.indexOf(origin) >= 0) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+};
+
+APP.use(cors())
+
+
 APP.use(express.json())
 APP.use('/users', userController)
 APP.use('/sessions', sessionsController)
@@ -41,19 +57,8 @@ mongoose.connection.once('open', () => {
     console.log('Connected to Mongo')
 })
 
-// Cors Middleware for Requests
-const whiteList = ['http://localhost:3000/', 'https://phonebook-frontend-project3.herokuapp.com/']
-const corsOptions = {
-    origin: (origin, callback) => {
-        if (whiteList.indexOf(origin) >= 0) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-};
 
-APP.use(cors(corsOptions))
+
 
 const contactsController = require('./controllers/contacts')
 

@@ -45,7 +45,7 @@ const isAuthenticated = (req, res, next) => {
     }
 }
 
-const MONGODBNAME = 'mongodb://localhost:27017/' + 'contacts'
+const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/' + 'contacts'
 
 // Mongo Setup 
 mongoose.connect(MONGODBNAME, {

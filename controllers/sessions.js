@@ -15,11 +15,14 @@ sessions.post('/', (req, res) => {
             // if found user is undefined/null not found etc
             res.send('<a  href="/">Sorry, no user found </a>')
         } else {
+
             // user is found yay!
             // now let's check if passwords match
             if (bcrypt.compareSync(req.body.password, foundUser.password)) {
                 // add the user to our session
-                req.session.currentUser = foundUser
+                console.log('----line 23 back end ----')
+                // req.session.currentUser = foundUser
+
                 // redirect back to our home page
                 res.send(foundUser)
             } else {

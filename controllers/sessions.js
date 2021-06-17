@@ -3,11 +3,6 @@ const express = require('express')
 const sessions = express.Router()
 const User = require('../models/users.js')
 
-sessions.get('/new', (req, res) => {
-    res.render('sessions/new.ejs', {
-        currentUser: req.session.currentUser
-    })
-})
 
 // on sessions form submit (log in)
 sessions.post('/', (req, res) => {
@@ -22,12 +17,11 @@ sessions.post('/', (req, res) => {
         } else {
             // user is found yay!
             // now let's check if passwords match
-
             if (bcrypt.compareSync(req.body.password, foundUser.password)) {
                 // add the user to our session
                 req.session.currentUser = foundUser
                 // redirect back to our home page
-                res.redirect('/patients')
+                res.send(foundUser)
             } else {
                 // passwords do not match
                 res.send('<a href="/"> password does not match </a>')

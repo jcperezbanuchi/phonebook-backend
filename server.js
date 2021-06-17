@@ -8,6 +8,19 @@ const PORT = process.env.PORT || 3003
 const sessionsController = require('./controllers/sessions')
 const userController = require('./controllers/users')
 
+const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/' + 'contacts'
+
+
+// Mongo Setup 
+mongoose.connect(MONGODBNAME, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+})
+mongoose.connection.once('open', () => {
+    console.log('Connected to Mongo')
+})
+
 
 // Cors Middleware for Requests
 const whiteList = ['http://localhost:3000/', 'https://phonebook-frontend-project3.herokuapp.com']
@@ -22,6 +35,8 @@ const corsOptions = {
 };
 
 APP.use(cors())
+
+
 
 
 APP.use(express.json())
@@ -41,21 +56,13 @@ const isAuthenticated = (req, res, next) => {
     if (req.session.currentUser) {
         return next()
     } else {
-        res.redirect('/sessions/new')
+        // res.redirect('/sessions/new')
     }
 }
 
-const MONGODBNAME = process.env.MONGODBNAME || 'mongodb://localhost:27017/' + 'contacts'
 
-// Mongo Setup 
-mongoose.connect(MONGODBNAME, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-})
-mongoose.connection.once('open', () => {
-    console.log('Connected to Mongo')
-})
+
+
 
 
 
